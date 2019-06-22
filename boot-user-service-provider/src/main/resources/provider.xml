@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+  
+   <!-- 1. 指定应用的名称 -->
+   <dubbo:application name="boot-user-service-provider"></dubbo:application>
+   
+   <!-- 2.指定 注册中心的地址-->
+   <dubbo:registry address="zookeeper://127.0.0.1:2181"></dubbo:registry>
+   
+   <!-- 3.指定通信协议 -->
+   <dubbo:protocol name="dubbo" port="20882" />
+   
+    <!-- 声明需要暴露的服务接口    ref指向服务的真正实现-->
+    <dubbo:service interface="com.nanhau.wangjinyin.gmall.service.UserService" ref="userService"/>
+    
+ 
+    <!-- 和本地bean一样实现服务 -->
+    <bean id="userService" class="com.nanhua.wangjinyin.gmall.service.impl.UserServiceImpl" />
+ 
+     <!-- 声明需要暴露的服务接口    ref指向服务的真正实现-->
+     <!--   <dubbo:service interface="com.nanhau.wangjinyin.gmall.service.UserService" ref="userService02" 
+      version="2.0.0"/> -->
+    
+    <!--  <bean id="userService02" class="com.nanhua.wangjinyin.gmall.service.impl.UserServiceImpl2"></bean> -->
+    <!-- 连接监控中心 -->
+    <dubbo:monitor protocol="registry"></dubbo:monitor>
+    
+    <!-- 统一设置提供方的规则 -->
+    <dubbo:provider></dubbo:provider>
+</beans>
